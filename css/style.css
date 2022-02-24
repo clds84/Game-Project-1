@@ -122,4 +122,15 @@ body {
     to { border-color: orange; }
   }
     
- 
+ #button {
+    color: white;
+    /*
+    background-color: rgb(0, 0, 0);
+    height:50px;
+    width:100px;
+    border:2px solid white;
+    border-radius:10px;
+    margin-right: 200px;
+    margin-top:5px;
+    */
+}

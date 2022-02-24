@@ -2,6 +2,7 @@ let canvas = document.querySelector('#game')
 let timerBox = document.querySelector('#timer')
 let instructionBox = document.querySelector('instructions')
 let typewriter = document.querySelector('#typewriter')
+let nextLevelButton = document.querySelector('#button')
 //canvas.setAttribute('width', getComputedStyle(canvas)['width'])
 //canvas.setAttribute('height', getComputedStyle(canvas)['height'])
 //canvas.width = window.innerWidth;
@@ -110,10 +111,10 @@ let wallOneTop = new Wall(949,0,50,425,5)
 let wallOneBottom = new Wall(949,500,50,200,5)
 let wallTwoTop = new Wall(949,0,50,150,2)
 let wallTwoBottom = new Wall(949,250,50,500,2)
-let wallThreeTop = new Wall(899,0,100,200,2)
-let wallThreeMiddle = new Wall(899,275,100,500,2)
-let wallThreeBottom = new Wall(899,850,100,480,2)
-let destroyWall = new Wall(949,0,50,1000,2)
+let wallThreeTop = new Wall(899,0,100,200,3)
+let wallThreeMiddle = new Wall(899,275,100,500,3)
+let wallThreeBottom = new Wall(899,850,100,480,3)
+
 
 
 
@@ -127,8 +128,20 @@ const detectHit = () => {
         && player.x + player.width > arrayForHit[i].x
         && player.y < arrayForHit[i].y + arrayForHit[i].height
         && player.y + player.height > arrayForHit[i].y){
-            player.alive = false
+           // if(counter <= 53 && wallTwoTop.alive && wallTwoBottom.alive
+            //  && wallThreeTop.alive && wallThreeMiddle.alive && wallThreeBottom.alive){
+             //   player.alive = false
+           // }
+            //if(counter <= 43 && wallThreeTop.alive && wallThreeMiddle.alive && wallThreeBottom.alive){
+             //   player.alive = false
+           // }
+            
+            
+            
+           // if(counter )
+            //player.alive = false
            // console.log('hit detected', arrayForHit[i])
+            player.alive = false
         }
     }
     
@@ -207,7 +220,8 @@ const detectTeleportation = () => {
 
 
 function animate() {
-    requestAnimationFrame(animate)
+    animation = requestAnimationFrame(animate)
+    
     ctx.clearRect(0,0,canvas.width,canvas.height)
     
   if (player.alive === true){
@@ -217,25 +231,33 @@ function animate() {
         //console.log(player.alive)
 }
         
-    if (counter <= 53){
-       wallTwoTop.update()
-       wallTwoBottom.update()
- }
-    if (counter <= 43.5){
-       wallThreeTop.update()
-       wallThreeMiddle.update()
-       wallThreeBottom.update()
- }
-    if (counter <= 25){
-     destroyWall.update()
- }
+ //   if (counter <= 53){
+ //      wallTwoTop.update()
+ //      wallTwoBottom.update()
+ //}  
+ // 
+ //   if (counter <= 43){
+ //      wallThreeTop.update()
+ //      wallThreeMiddle.update()
+ //      wallThreeBottom.update()
+ //} 
+   
+    
+ 
+
 
     teleportBottom.render()
     teleportTop.render()
     teleportLeft.render()
     teleportRight.render()
     wallOneTop.update()
-    wallOneBottom.update()  
+    wallOneBottom.update() 
+    wallTwoTop.update()
+    wallTwoBottom.update()
+    wallThreeTop.update()
+    wallThreeMiddle.update()
+    wallThreeBottom.update()
+
     //console.log(wallOneTop.x,wallOneTop.y)
 
 }
@@ -245,7 +267,6 @@ if (e.keyCode === 71){
 typewriter.style.visibility = "hidden"
 GameTimer()
 animate()
-stopAnimationFrame()
 }
 })
 
@@ -261,7 +282,7 @@ const GameTimer = () => {
         counter --  
     }  
     if (player.alive && counter === 0){
-        
+        window.cancelAnimationFrame(animation)
         moodyManAudio.pause()
         moodyManAudio.currentTime = 0
         prettyGoodAudio.play()    
@@ -362,6 +383,11 @@ const playerMovement = (e) => {
 //        }
 //}
 document.addEventListener('keydown', playerMovement)
+
+nextLevelButton.addEventListener('click', () => {
+animate2()
+GameTimer()
+})
 
 
 document.addEventListener('DOMContentLoaded', () => {
