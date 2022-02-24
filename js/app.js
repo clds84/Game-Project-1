@@ -1,9 +1,14 @@
-let canvas = document.querySelector('canvas')
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+let canvas = document.querySelector('#game')
+
+//canvas.setAttribute('width', getComputedStyle(canvas)['width'])
+//canvas.setAttribute('height', getComputedStyle(canvas)['height'])
+//canvas.width = window.innerWidth;
+//canvas.height = window.innerHeight;
 
 const ctx = canvas.getContext('2d');
- 
+ console.log(ctx)
+ console.log(canvas.width)
+
 function Player(x,y,width,height){
     this.x = x
     this.y = y
@@ -19,26 +24,26 @@ function Player(x,y,width,height){
 }
 let player = new Player(50,50,40,40)
 
-function Grenade(x,y,width,height,dx){
-    this.x = x
-    this.y = y
-    this.width = width
-    this.height = height
-    this.dx = dx
-    this.alive = true
-    this.render = function (){
-       ctx.fillStyle = 'rgba(30, 145, 118, 0.599)'
-       ctx.fillRect(this.x,this.y,this.width,this.height,this.dx)
-    }
-   this.update = function () {
-       if (this.x < 0 ||this.x + this.width > innerWidth){
-           this.dx = -this.dx
-       }
-       this.x -= this.dx   
-           this.render()  
-    }
-}
-let grenade = new Grenade(player.x,player.y,5,5,10)
+//function Grenade(x,y,width,height,dx){
+//    this.x = x
+//    this.y = y
+//    this.width = width
+//    this.height = height
+//    this.dx = dx
+//    this.alive = true
+//    this.render = function (){
+//       ctx.fillStyle = 'rgba(30, 145, 118, 0.599)'
+//       ctx.fillRect(this.x,this.y,this.width,this.height,this.dx)
+//    }
+//   this.update = function () {
+//       if (this.x < 0 ||this.x + this.width > innerWidth){
+//           this.dx = -this.dx
+//       }
+//       this.x -= this.dx   
+//           this.render()  
+//    }
+//}
+//let grenade = new Grenade(player.x,player.y,5,5)
 
 function Teleport(x,y,width,height,){
     this. x = x
@@ -50,10 +55,10 @@ function Teleport(x,y,width,height,){
         ctx.fillRect(this.x,this.y,this.width,this.height)
     }
 }
-let teleportBottom = new Teleport(550,900,30,30)
-let teleportTop = new Teleport(550,10,30,30)
-let teleportLeft = new Teleport(10,450,30,30)
-let teleportRight = new Teleport(1120,450,30,30)
+let teleportBottom = new Teleport(500,660,30,30)
+let teleportTop = new Teleport(500,10,30,30)
+let teleportLeft = new Teleport(10,350,30,30)
+let teleportRight = new Teleport(960,350,30,30)
 
 function Wall(x,y,width,height,dx) {
     this.x = x
@@ -67,21 +72,33 @@ function Wall(x,y,width,height,dx) {
        ctx.fillRect(this.x,this.y,this.width,this.height,this.dx)
     }
    this.update = function () {
-       if (this.x < 0 ||this.x + this.width > innerWidth){
+    //    console.log(this.x < 0)
+    //    console.log(this.x + this.width)
+    //    console.log(canvas.width)
+       if (this.x < 0 || this.x + this.width > innerWidth){
            this.dx = -this.dx
        }
        this.x -= this.dx   
            this.render()  
     }
+//console.log(innerWidth, canvas.width)
+
+//app.js:76 1102
+//app.js:77 1000
+//app.js:75 false
+//app.js:76 1160
+//app.js:77 1000
+//
 }
-let wallOneTop = new Wall(1020,0,50,425,5)
-let wallOneBottom = new Wall(1020,500,50,innerHeight,5)
-let wallTwoTop = new Wall(1020,0,50,150,2)
-let wallTwoBottom = new Wall(1020,250,50,innerHeight,2)
-let wallThreeTop = new Wall(1020,0,110,200,2)
-let wallThreeMiddle = new Wall(1020,275,110,500,2)
-let wallThreeBottom = new Wall(1020,850,110,innerHeight,2)
-let destroyWall = new Wall(1020,0,50,1000,2)
+let wallOneTop = new Wall(1000,0,50,425,5)
+
+let wallOneBottom = new Wall(1000,500,50,innerHeight,5)
+let wallTwoTop = new Wall(1000,0,50,150,2)
+let wallTwoBottom = new Wall(1000,250,50,innerHeight,2)
+let wallThreeTop = new Wall(1000,0,110,200,2)
+let wallThreeMiddle = new Wall(1000,275,110,500,2)
+let wallThreeBottom = new Wall(1000,850,110,innerHeight,2)
+let destroyWall = new Wall(1000,0,50,1000,2)
 
 
 const arrayForHit = [wallOneTop, wallOneBottom, wallTwoTop, wallTwoBottom, wallThreeTop, wallThreeMiddle, wallThreeBottom]
@@ -92,8 +109,10 @@ const detectHit = () => {
         && player.y < arrayForHit[i].y + arrayForHit[i].height
         && player.y + player.height > arrayForHit[i].y){
             player.alive = false
+           // console.log('hit detected', arrayForHit[i])
         }
     }
+    
 }
 //const teleArray = [teleportBottom,teleportTop,teleportLeft,teleportRight]
 const detectTeleportation = () => {
@@ -103,37 +122,35 @@ const detectTeleportation = () => {
         && player.y + player.height > teleportBottom.y){
             
             player.alive = false
-            player = new Player(1050,400,40,40)
+            player = new Player(910,350,40,40)
             console.log(player.alive)
-        }
-   
-   
-    else if(player.x < teleportTop.x + teleportTop.width
+        
+        } else if(player.x < teleportTop.x + teleportTop.width
         && player.x + player.width > teleportTop.x
         && player.y < teleportTop.y + teleportTop.height
         && player.y + player.height > teleportTop.y){
             
             player.alive = false
-            player = new Player(50,450,40,40)
+            player = new Player(50,350,40,40)
             console.log(player.alive)
-        }
-    
-    else if(player.x < teleportLeft.x + teleportLeft.width
+        
+        } else if(player.x < teleportLeft.x + teleportLeft.width
         && player.x + player.width > teleportLeft.x
         && player.y < teleportLeft.y + teleportLeft.height
         && player.y + player.height > teleportLeft.y){
             
             player.alive = false
-            player = new Player(550,50,40,40)
+            player = new Player(500,50,40,40)
             console.log(player.alive)
-        }
-    else if(player.x < teleportRight.x + teleportRight.width
+        
+        } 
+        else if(player.x < teleportRight.x + teleportRight.width
         && player.x + player.width > teleportRight.x
         && player.y < teleportRight.y + teleportRight.height
         && player.y + player.height > teleportRight.y){
             
             player.alive = false
-            player = new Player(1170,450,40,40)
+            player = new Player(500,610,40,40)
             console.log(player.alive)
         }
 
@@ -172,36 +189,75 @@ let counter = 59
 
 function animate() {
     requestAnimationFrame(animate)
-    ctx.clearRect(0,0,innerWidth,innerHeight)
+    ctx.clearRect(0,0,canvas.width,canvas.height)
     
   if (player.alive === true){
         player.render()
         detectHit()
         detectTeleportation()
-        console.log(player.alive)
+        //console.log(player.alive)
 }
-  teleportBottom.render()
-  teleportTop.render()
-  teleportLeft.render()
-  teleportRight.render()
-  
-  wallOneTop.update()
-  wallOneBottom.update()
+        
+    if (counter <= 53){
+       wallTwoTop.update()
+       wallTwoBottom.update()
+ }
+    if (counter <= 43.5){
+       wallThreeTop.update()
+       wallThreeMiddle.update()
+       wallThreeBottom.update()
+ }
+    if (counter <= 25){
+     destroyWall.update()
+ }
 
-  if (counter <= 53){
-        wallTwoTop.update()
-        wallTwoBottom.update()
-  }
-  if (counter <= 43.5){
-        wallThreeTop.update()
-        wallThreeMiddle.update()
-        wallThreeBottom.update()
-  }
-  if (counter <= 25){
-      destroyWall.update()
-  }
+    teleportBottom.render()
+    teleportTop.render()
+    teleportLeft.render()
+    teleportRight.render()
+    wallOneTop.update()
+    wallOneBottom.update()  
+    //console.log(wallOneTop.x,wallOneTop.y)
+
 }
+document.addEventListener('keydown', (e) => {
+if (e.keyCode === 32){  
+GameTimer()
 animate()
+}
+})
+
+const prettyGoodAudio = new Audio('pretty-good.m4a');
+const xmasTimeAudio = new Audio('xmas-time.m4a')
+const moodyManAudio = new Audio('moody-man.m4a')
+
+const GameTimer = () => {
+    setInterval(() => {
+        //timer.innerText = counter
+  //  if (player.alive && counter > 0) {
+  //      moodyManAudio.play()
+  //      console.log(counter)
+  //  
+  //  }  
+  //  if (player.alive && counter === 0){
+  //      moodyManAudio.pause()
+  //      moodyManAudio.currentTime = 0
+  //      prettyGoodAudio.play()
+  //  }
+  //  
+  //  
+  //  else if (!player.alive && counter > 0){
+  //      moodyManAudio.pause()
+  //      moodyManAudio.currentTime = 0
+  //      xmasTimeAudio.play()
+  //  }
+    
+        counter --  
+    }, 1000);
+
+
+}
+
 
 const playerMovement = (e) => {
     // we can use if...else and keycodes to determine player movement
@@ -249,27 +305,22 @@ const playerMovement = (e) => {
             break
     }
 }
-const playerGrenade = (e) => {
-        switch (e.keyCode) {
-            case (32):
-                grenade.update()
-               grenade.x += 40
-              break
+//const playerGrenade = (e) => {
+//        switch (e.keyCode) {
+//            case (32):
+//                grenade.update()
+//              //  grenade.x += 10
+//
+//        }
+//}
+document.addEventListener('keydown', playerMovement)
 
-        }
-}
 
 document.addEventListener('DOMContentLoaded', () => {
-    document.addEventListener('keydown', playerMovement)
-    document.addEventListener('keydown', playerGrenade)
-    setInterval(() => {
-        //timer.innerText = counter
-    if (wallOneTop.alive === true) {
-        
-        console.log(counter)
-    }
-        counter --  
-    }, 1000);
+    
+
+ 
+
 
 
 })
