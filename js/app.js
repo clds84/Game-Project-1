@@ -1,5 +1,7 @@
 let canvas = document.querySelector('#game')
-
+let timerBox = document.querySelector('#timer')
+let instructionBox = document.querySelector('instructions')
+let typewriter = document.querySelector('#typewriter')
 //canvas.setAttribute('width', getComputedStyle(canvas)['width'])
 //canvas.setAttribute('height', getComputedStyle(canvas)['height'])
 //canvas.width = window.innerWidth;
@@ -50,6 +52,7 @@ function Teleport(x,y,width,height,){
     this.y = y
     this.width = width
     this.height = height
+    this.alive = true
     this.render = function(){
         ctx.fillstyle = 'rgba(145, 30, 40, 0.599)'
         ctx.fillRect(this.x,this.y,this.width,this.height)
@@ -75,12 +78,24 @@ function Wall(x,y,width,height,dx) {
     //    console.log(this.x < 0)
     //    console.log(this.x + this.width)
     //    console.log(canvas.width)
-       if (this.x < 0 || this.x + this.width > innerWidth){
+       if (this.x < 0 || this.x + this.width > canvas.width){
            this.dx = -this.dx
        }
        this.x -= this.dx   
            this.render()  
-    }
+   }
+    
+}   
+
+    
+
+//
+// this.draw(ctx) {
+//    ctx.strokeStyle = 'orange';
+//    ctx.fillStyle = 'black'
+//    ctx.strokeRect(this.x,this.y,this.width,this.height)
+//    ctx.fillRect(this.x,this.y,this.width,this.height)
+//   } 
 //console.log(innerWidth, canvas.width)
 
 //app.js:76 1102
@@ -89,19 +104,23 @@ function Wall(x,y,width,height,dx) {
 //app.js:76 1160
 //app.js:77 1000
 //
-}
-let wallOneTop = new Wall(1000,0,50,425,5)
 
-let wallOneBottom = new Wall(1000,500,50,innerHeight,5)
-let wallTwoTop = new Wall(1000,0,50,150,2)
-let wallTwoBottom = new Wall(1000,250,50,innerHeight,2)
-let wallThreeTop = new Wall(1000,0,110,200,2)
-let wallThreeMiddle = new Wall(1000,275,110,500,2)
-let wallThreeBottom = new Wall(1000,850,110,innerHeight,2)
-let destroyWall = new Wall(1000,0,50,1000,2)
+
+let wallOneTop = new Wall(949,0,50,425,5)
+let wallOneBottom = new Wall(949,500,50,200,5)
+let wallTwoTop = new Wall(949,0,50,150,2)
+let wallTwoBottom = new Wall(949,250,50,500,2)
+let wallThreeTop = new Wall(899,0,100,200,2)
+let wallThreeMiddle = new Wall(899,275,100,500,2)
+let wallThreeBottom = new Wall(899,850,100,480,2)
+let destroyWall = new Wall(949,0,50,1000,2)
+
 
 
 const arrayForHit = [wallOneTop, wallOneBottom, wallTwoTop, wallTwoBottom, wallThreeTop, wallThreeMiddle, wallThreeBottom]
+
+
+
 const detectHit = () => {    
     for (let i = 0; i < arrayForHit.length;i++){
         if(player.x < arrayForHit[i].x + arrayForHit[i].width
@@ -185,7 +204,7 @@ const detectTeleportation = () => {
 
 }
 
-let counter = 59
+
 
 function animate() {
     requestAnimationFrame(animate)
@@ -221,40 +240,69 @@ function animate() {
 
 }
 document.addEventListener('keydown', (e) => {
-if (e.keyCode === 32){  
+    
+if (e.keyCode === 71){  
+typewriter.style.visibility = "hidden"
 GameTimer()
 animate()
+stopAnimationFrame()
 }
 })
 
 const prettyGoodAudio = new Audio('pretty-good.m4a');
 const xmasTimeAudio = new Audio('xmas-time.m4a')
 const moodyManAudio = new Audio('moody-man.m4a')
-
+let counter = 60
 const GameTimer = () => {
-    setInterval(() => {
-        //timer.innerText = counter
-  //  if (player.alive && counter > 0) {
-  //      moodyManAudio.play()
-  //      console.log(counter)
-  //  
-  //  }  
-  //  if (player.alive && counter === 0){
-  //      moodyManAudio.pause()
-  //      moodyManAudio.currentTime = 0
-  //      prettyGoodAudio.play()
-  //  }
-  //  
-  //  
-  //  else if (!player.alive && counter > 0){
-  //      moodyManAudio.pause()
-  //      moodyManAudio.currentTime = 0
-  //      xmasTimeAudio.play()
-  //  }
-    
+    setInterval(() => {    
+    if (player.alive && counter > 0) {
+        moodyManAudio.play()
+        console.log(counter)
         counter --  
-    }, 1000);
+    }  
+    if (player.alive && counter === 0){
+        
+        moodyManAudio.pause()
+        moodyManAudio.currentTime = 0
+        prettyGoodAudio.play()    
+        counter = 0
+        console.log(counter)
+        typewriter.style.visibility = "visible"
 
+        typewriter.innerText = `What the hell. That wasn't supposed to happen.`
+    }
+    
+    
+    
+    else if (!player.alive && counter > 0){
+        
+        moodyManAudio.pause()
+        moodyManAudio.currentTime = 0
+        xmasTimeAudio.play()
+        counter = counter
+        typewriter.style.visibility = "visible"
+        typewriter.innerText = `You died. Press start to try again.`
+        
+       // typewriter.style.overflow = "hidden"
+       // typewriter.style.borderRight = ".15em solid orange"
+       // typewriter.style.whiteSpace = "nowrap"
+       // typewriter.style.fontSize = "1.2rem"
+       // typewriter.style.width = 0
+       // typewriter.style.animation = 
+       //     "typing 2s steps(40, end) forwards"
+       //     "blink .8s infinite;"
+      
+
+
+
+
+
+    }
+    timerBox.innerText = counter
+
+         
+    }, 1000);
+    
 
 }
 
@@ -317,7 +365,8 @@ document.addEventListener('keydown', playerMovement)
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    
+typewriter.innerText = `Press G to start`
+
 
  
 
