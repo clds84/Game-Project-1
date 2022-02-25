@@ -27,27 +27,6 @@ function Player(x,y,width,height){
 }
 let player = new Player(50,50,40,40)
 
-//function Grenade(x,y,width,height,dx){
-//    this.x = x
-//    this.y = y
-//    this.width = width
-//    this.height = height
-//    this.dx = dx
-//    this.alive = true
-//    this.render = function (){
-//       ctx.fillStyle = 'rgba(30, 145, 118, 0.599)'
-//       ctx.fillRect(this.x,this.y,this.width,this.height,this.dx)
-//    }
-//   this.update = function () {
-//       if (this.x < 0 ||this.x + this.width > innerWidth){
-//           this.dx = -this.dx
-//       }
-//       this.x -= this.dx   
-//           this.render()  
-//    }
-//}
-//let grenade = new Grenade(player.x,player.y,5,5)
-
 function Teleport(x,y,width,height,){
     this. x = x
     this.y = y
@@ -88,9 +67,6 @@ function Wall(x,y,width,height,dx) {
     
 }   
 
-    
-
-//
 // this.draw(ctx) {
 //    ctx.strokeStyle = 'orange';
 //    ctx.fillStyle = 'black'
@@ -98,14 +74,6 @@ function Wall(x,y,width,height,dx) {
 //    ctx.fillRect(this.x,this.y,this.width,this.height)
 //   } 
 //console.log(innerWidth, canvas.width)
-
-//app.js:76 1102
-//app.js:77 1000
-//app.js:75 false
-//app.js:76 1160
-//app.js:77 1000
-//
-
 
 let wallOneTop = new Wall(949,0,50,425,5)
 let wallOneBottom = new Wall(949,500,50,200,5)
@@ -115,12 +83,7 @@ let wallThreeTop = new Wall(899,0,100,200,3)
 let wallThreeMiddle = new Wall(899,275,100,500,3)
 let wallThreeBottom = new Wall(899,850,100,480,3)
 
-
-
-
 const arrayForHit = [wallOneTop, wallOneBottom, wallTwoTop, wallTwoBottom, wallThreeTop, wallThreeMiddle, wallThreeBottom]
-
-
 
 const detectHit = () => {    
     for (let i = 0; i < arrayForHit.length;i++){
@@ -135,16 +98,12 @@ const detectHit = () => {
             //if(counter <= 43 && wallThreeTop.alive && wallThreeMiddle.alive && wallThreeBottom.alive){
              //   player.alive = false
            // }
-            
-            
-            
-           // if(counter )
+             // if(counter )
             //player.alive = false
            // console.log('hit detected', arrayForHit[i])
             player.alive = false
         }
-    }
-    
+    }   
 }
 //const teleArray = [teleportBottom,teleportTop,teleportLeft,teleportRight]
 const detectTeleportation = () => {
@@ -217,11 +176,9 @@ const detectTeleportation = () => {
 
 }
 
-
-
 function animate() {
-    animation = requestAnimationFrame(animate)
-    
+   animation = requestAnimationFrame(animate)
+   moodyManAudio.play() 
     ctx.clearRect(0,0,canvas.width,canvas.height)
     
   if (player.alive === true){
@@ -259,32 +216,89 @@ function animate() {
     wallThreeBottom.update()
 
     //console.log(wallOneTop.x,wallOneTop.y)
+    
+}
+
+function animate2() {
+   animation2 = requestAnimationFrame(animate2)
+    
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+//wallOneTop.dx = 3
+//wallOneBottom.dx = 3 
+//wallTwoTop.dx = 2
+//wallTwoBottom.dx = 2 
+//wallThreeTop.dx = 1
+//wallThreeMiddle.dx = 1
+//wallThreeBottom.dx = 1
+let wallOneTop = new Wall(949,0,50,425,5)
+let wallOneBottom = new Wall(949,500,50,200,5)
+let wallTwoTop = new Wall(949,0,50,150,2)
+let wallTwoBottom = new Wall(949,250,50,500,2)
+let wallThreeTop = new Wall(899,0,100,200,3)
+let wallThreeMiddle = new Wall(899,275,100,500,3)
+let wallThreeBottom = new Wall(899,850,100,480,3)
+    
+        //player.alive === true
+        player.render()
+        detectHit()
+        detectTeleportation()
+        //console.log(player.alive)
+
+        
+ //   if (counter <= 53){
+ //      wallTwoTop.update()
+ //      wallTwoBottom.update()
+ //}  
+ // 
+ //   if (counter <= 43){
+ //      wallThreeTop.update()
+ //      wallThreeMiddle.update()
+ //      wallThreeBottom.update()
+ //} 
+    teleportBottom.render()
+    teleportTop.render()
+    teleportLeft.render()
+    teleportRight.render()
+    wallOneTop.update()
+    wallOneBottom.update() 
+    wallTwoTop.update()
+    wallTwoBottom.update()
+    wallThreeTop.update()
+    wallThreeMiddle.update()
+    wallThreeBottom.update()
+
+    //console.log(wallOneTop.x,wallOneTop.y)
 
 }
+
 document.addEventListener('keydown', (e) => {
-    
 if (e.keyCode === 71){  
 typewriter.style.visibility = "hidden"
 GameTimer()
 animate()
+//moodyManAudio.play()
 }
 })
+nextLevelButton.addEventListener('click', () => {
+    animate2()
+    GameTimer()
+    })
 
 const prettyGoodAudio = new Audio('pretty-good.m4a');
 const xmasTimeAudio = new Audio('xmas-time.m4a')
 const moodyManAudio = new Audio('moody-man.m4a')
-let counter = 60
+let counter = 59
 const GameTimer = () => {
     setInterval(() => {    
     if (player.alive && counter > 0) {
-        moodyManAudio.play()
-        console.log(counter)
-        counter --  
+        
+        
     }  
     if (player.alive && counter === 0){
         window.cancelAnimationFrame(animation)
         moodyManAudio.pause()
-        moodyManAudio.currentTime = 0
+         moodyManAudio.currentTime = 0
         prettyGoodAudio.play()    
         counter = 0
         console.log(counter)
@@ -292,14 +306,12 @@ const GameTimer = () => {
 
         typewriter.innerText = `What the hell. That wasn't supposed to happen.`
     }
-    
-    
-    
     else if (!player.alive && counter > 0){
-        
+        window.cancelAnimationFrame(animation)
+        //window.cancelAnimationFrame(animation2)
         moodyManAudio.pause()
         moodyManAudio.currentTime = 0
-        xmasTimeAudio.play()
+       // xmasTimeAudio.play()
         counter = counter
         typewriter.style.visibility = "visible"
         typewriter.innerText = `You died. Press start to try again.`
@@ -312,15 +324,9 @@ const GameTimer = () => {
        // typewriter.style.animation = 
        //     "typing 2s steps(40, end) forwards"
        //     "blink .8s infinite;"
-      
-
-
-
-
-
     }
     timerBox.innerText = counter
-
+      
          
     }, 1000);
     
@@ -384,10 +390,7 @@ const playerMovement = (e) => {
 //}
 document.addEventListener('keydown', playerMovement)
 
-nextLevelButton.addEventListener('click', () => {
-animate2()
-GameTimer()
-})
+
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -399,3 +402,6 @@ typewriter.innerText = `Press G to start`
 
 
 })
+
+
+
