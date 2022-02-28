@@ -21,6 +21,7 @@ function Player(x,y,width,height){
         right: false,
         left:false
 }
+
 //This function inside the player class will be part of the code for moving the player
 //and changing this.direction to true in the event the keys are pressed
     this.setDirection = function (key) {
