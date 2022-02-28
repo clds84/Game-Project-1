@@ -13,10 +13,11 @@ body {
     
   }
 #game {
+    position:relative;
     background-color:rgb(0, 0, 0) ;
     border:20px solid white;
     border-radius:30px;
-    margin-top:20px;
+    margin-top:8px;
     
     
 }
@@ -44,10 +45,10 @@ body {
 
 #top {
     background-color: rgb(0, 0, 0);
-    height:300px;
+    height:750px;
     width:300px;
     float:right;
-    margin-top: -100px;
+    margin-top: -10px;
     border:12px solid white;
     border-radius: 30px;
     align-self:center;
@@ -75,7 +76,7 @@ body {
     text-align:center;
     color:white;
 }
-    #instructions {
+    #p1, #p2, #p3, #p4{
         font-family: 'Press Start 2P', monospace;
         text-align:center;
         color:white;
@@ -83,11 +84,8 @@ body {
         margin-top:40px;
     }
 
-#top {
-    display:inline-block;
-}
-
 #typewriter-container {
+     display:flex;
     font-family: 'Press Start 2P', monospace;
     text-align:center;
     color:white;
@@ -98,6 +96,7 @@ body {
 
 #typewriter {
   
+  
   overflow: hidden;
   border-right: .15em solid orange;
   white-space: nowrap;
@@ -105,12 +104,7 @@ body {
   width: 0;
   animation: 
       typing 2s steps(40, end) forwards,
-      blink .8s infinite;
-
-    /*height:10px;
-    color:white;
-    margin-bottom:20px;*/
-    
+      blink .8s infinite;    
 }
 
 @keyframes typing {
@@ -123,14 +117,23 @@ body {
   }
     
  #button {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 16px;
     color: white;
-    /*
     background-color: rgb(0, 0, 0);
-    height:50px;
-    width:100px;
-    border:2px solid white;
+    height:55px;
+    width:110px;
+    border:6px solid white;
     border-radius:10px;
-    margin-right: 200px;
-    margin-top:5px;
-    */
+    margin-right:20px;
+    margin-top:10px;
+    
+}
+#game-name {
+    color:white;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 40px;
+    position:absolute;
+    top:0;
+    right:170px;
 }
