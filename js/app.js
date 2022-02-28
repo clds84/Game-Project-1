@@ -1,3 +1,5 @@
+//music credited to Vince Guaraldi Trio - Christmas Time is here (Vocal)
+//music  "Grind" credit to MoodyMan (edit/Mixed)
 let canvas = document.querySelector('#game')
 let timerBox = document.querySelector('#timer')
 let instructionBox = document.querySelector('instructions')
