@@ -287,7 +287,7 @@ const playLevel1 = (e) => {
         //This will clear the timer based on the condition of time and player.alive
         //status
         if (!player.alive || player.alive && counter === 0){
-            timerBox.innerText = counter   
+            timerBox.innerText = "time left" + counter   
             clearInterval(Timer)
         }
        //  else if (player.alive && counter === 0){

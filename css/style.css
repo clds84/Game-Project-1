@@ -2,6 +2,8 @@
     --border: 12px solid white;
     --border-radius:30px;
     --font-family: 'Press Start 2P', monospace;
+    --font-size: 16px;
+    --color: white;
 }
 body {
     font-family: var(--font-family);
@@ -10,7 +12,14 @@ body {
     rgb(2, 22, 57) 0%,
     rgb(93, 11, 7) 100%
     );
-    color:white;
+    color: var(--color);
+    margin:20px;
+}
+.game-instructions-timer-button {
+    background-color:black;
+    border:var(--border);
+    border-radius: var(--border-radius);
+    font-size: var(--font-size);
 }
 #grid-container{
     display:grid;
@@ -20,65 +29,48 @@ body {
 }
 main {
     grid-column:2;
-    grid-row:2;
-}
-#game {
-    background-color:rgb(0, 0, 0) ;
-    border:var(--border);
-    border-radius: var(--border-radius);
-}
-#play-again {
-    height:200px;
-    
-}
-#game-status {
-    height:30px;
-    width:30px;
-    background-color: black;
+    grid-row:2/span 3;
 }
 #instructions {
     grid-column:1;
-    grid-row:2;
-    box-sizing:border-box;
-    background-color: rgb(0, 0, 0);
-    height:700px;
+    grid-row:3/span 2;
+    align-self:end;
+    height:600px;
     width:300px;
-    border:var(--border);
-    border-radius: var(--border-radius);
-    text-align:center;
     line-height:40px;
-}
-#timer-div  {
-    background-color: rgb(0, 0, 0);
-    height:75px;
-    width:75px;
-    text-align-last:center;
-    border:var(--border);
-    border-radius: var(--border-radius);
 }
 #timer {
-    grid-column:3;
-    text-align:center;
+    grid-column:1;
+    grid-row:2;
+    align-self:start;
+    height:50px;
+    width:300px;
 }
-#typewriter-container {
+#button {
     grid-column:2;
-    grid-row:4;
-    text-align:center;
-    line-height:40px;
-    margin-right:450px;
-    display:inline-block;
+    grid-row:6;
+    height:75px;
+    width:200px;
+    color:var(--color);
+    font-family: var(--font-family)
+}
+#game-title {
+    grid-column: 2/ span 1;
+    font-size: 40px;
 }
 #typewriter {
+    grid-column:2;
+    grid-row:5;
+    margin:40px;
+    max-width: min-content;
     overflow: hidden;
     border-right: .15em solid orange;
     white-space: nowrap;
     font-size: 1.2rem;
-    width: 0;
     animation: 
-        typing 2s steps(40, end) forwards,
-        blink .8s infinite;    
+        typing 8s steps(80, end) forwards,
+        blink 8s infinite;    
     }
-
 @keyframes typing {
     from { width: 0 }
     to { width: 100% }
@@ -88,19 +80,3 @@ main {
     to { border-color: orange; }
   }
     
- #button {
-    grid-column:3;
-    grid-row:4;
-    font-size: 16px;
-    background-color: rgb(0, 0, 0);
-    height:75px;
-    width:200px;
-    border:var(--border);
-    border-radius: var(--border-radius);
-    margin-right:20px;
-    margin-top:10px;   
-}
-#game-title {
-    grid-column: 2/ span 1;
-    font-size: 40px;
-}
