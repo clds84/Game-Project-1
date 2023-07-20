@@ -82,6 +82,18 @@ function Player(x,y,width,height){
             ctx.lineWidth = 10     
         }    
 }
+//adding key events for keyup and keydown. These are linked to set and unset functions
+
+document.addEventListener('keydown', (e) => {
+    //when key is pressed, direction is changed according to setDirection function
+    player.setDirection(e.key)
+})
+document.addEventListener('keyup', (e) => {
+    //if any key is released (WASD), direction changes to false
+    if (['w','a','s','d'].includes(e.key)) {
+        player.unsetDirection(e.key)
+    }
+})
 let player = new Player(50,50,40,40)
 //This will be the class for creating teleport squares
 function Teleport(x,y,width,height,){
@@ -155,18 +167,6 @@ let wallThreeBottom = new Wall(899,850,100,480,1)
 
 const arrayForHit = [wallOneTop, wallOneBottom, wallTwoTop, wallTwoBottom, wallThreeTop, wallThreeMiddle, wallThreeBottom]
 
-//adding key events for keyup and keydown. These are linked to set and unset methods
-//line 30 and 37
-document.addEventListener('keydown', (e) => {
-    //when key is pressed, direction is changed according to setDirection function
-    player.setDirection(e.key)
-})
-document.addEventListener('keyup', (e) => {
-    //if any key is released (WASD), direction changes to false
-    if (['w','a','s','d'].includes(e.key)) {
-        player.unsetDirection(e.key)
-    }
-})
 //This will be the hit ditection function. I started with a long code but made it
 //drier by utilizing a for loop. Player.alive will be false in the event collision
 //is detected.
@@ -302,57 +302,10 @@ const playLevel1 = (e) => {
 //This event listener will run the playLevel1 function when the playAgain button is clicked
 //As a try again or to just play again
 document.addEventListener('keydown', playLevel1)
+
 nextLevelButton.addEventListener('click', () => {
 window.location.reload()
 })
-//*****NO longer needed now that we have setDirection and unsetDirection functions     
-// const playerMovement = (e) => {
-//     // we can use if...else and keycodes to determine player movement
-//     // keycodes refer to specific keyboard keys with a number
-//     // if we want to use WASD the key codes are as follows:
-//     // w=87, a=65, s=83, d=68
-//     // up=38, down=40, left=37, right=39
-//     // we can also use a switch case which can be handy when we have multiple possibilities
-//     // switch case has a main switch, cases(which are our inputs in this instance)
-//     // we also need to break out of our cases, using the keyword break
-//     switch (e.keyCode) {
-//         case (87):
-//             // we'll move the player up
-//             player.y -= 40
-//             // then break the case 
-//             break
-//         case (65):
-//             // move the player left
-//             player.x -= 40
-//             break
-//         case (83):
-//             // move player down
-//             player.y += 40
-//             break
-//         case (68):
-//             // move the player right
-//             player.x += 40
-//             break
-//         case (38):
-//             // we'll move the player up
-//             player.y -= 40
-//             // then break the case
-//             break
-//         case (37):
-//             // move the player left
-//             player.x -= 40
-//             break
-//         case (40):
-//             // move player down
-//             player.y += 40
-//             break
-//         case (39):
-//             // move the player right
-//             player.x += 40
-//             break
-//     }
-// }
-
 //document.addEventListener('keydown', playerMovement)
 //This is to run the prompt for the user to press G to start when the browser loads
 document.addEventListener('DOMContentLoaded', () => {
