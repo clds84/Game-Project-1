@@ -6,6 +6,7 @@
     --color: white;
     --timerHeight:35px;
     --buttonWidth:250px;
+    --margin: 40px;
 }
 body {
     font-family: var(--font-family);
@@ -30,20 +31,16 @@ body {
     grid-gap:20px;
     justify-items:center;
     align-items:center;
-    margin:50px;
+    margin:var(--margin);
     max-width:1400px;
 }
 main {
     grid-column:1 / span 2;
     grid-row:2/span 3;
-    
-    /* width:fit-content; */
-    margin:40px;
+    margin: var(--margin)
 }
 #game {
     width: 100%;
-    /* height: fit-content; */
-
 }
 #game-title {
     grid-column: 1/span 2;
@@ -82,16 +79,13 @@ h3 {
     height:calc(var(--timerHeight) * 2);
     width:var(--buttonWidth);
     color:var(--color);
-    font-family: var(--font-family)
+    font-family: var(--font-family);
 }
-#typewriter {
+#typewriter-container {
     grid-column:1/ span 2;
     grid-row:5;
-    align-self:start;
-    max-width: min-content;
 }
-#typewriterDiv {
-
+#typewriter {
     overflow: hidden;
     border-right: .15em solid orange;
     white-space: nowrap;
