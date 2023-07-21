@@ -272,7 +272,7 @@ function animate() {
         window.location.reload()
         })
     }
-
+    
     teleportBottom.render()
     teleportTop.render()
     teleportLeft.render()
@@ -310,6 +310,7 @@ const playLevel1 = (e) => {
     }
 }
 let counter = 59
+
 const GameTimer = () => {
     timerBox.innerText = "Time Left: " + counter  
     //This will clear the timer based on the condition of time and player.alive
@@ -331,3 +332,4 @@ document.addEventListener('DOMContentLoaded', () => {
     
 })
 
+//9 16 66
