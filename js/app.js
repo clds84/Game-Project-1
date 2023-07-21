@@ -1,13 +1,25 @@
-let canvas = document.querySelector('#game')
+let canvas = document.getElementById('game')
+const ctx = canvas.getContext('2d');
+
+// canvas.setAttribute('width', getComputedStyle(canvas)['width'])
+// canvas.setAttribute('height', getComputedStyle(canvas)['height'])
+
+// window.onresize = function() {
+//     canvas.width = window.innerWidth;
+//     canvas.height = window.innerHeight;
+
+//     //call redraw
+// }
+
 let timerBox = document.querySelector('#timer')
 let instructionBox = document.querySelector('instructions')
 let typewriter = document.querySelector('#typewriter')
-let nextLevelButton = document.querySelector('#button')
-const ctx = canvas.getContext('2d');
+let button = document.getElementById('button')
+
 const prettyGoodAudio = new Audio('pretty-good.m4a');
 const xmasTimeAudio = new Audio('xmas-time.m4a')
 const moodyManAudio = new Audio('moody-man.m4a')
-let counter = 59
+
 //This class will be for creating my player. 
 function Player(x,y,width,height){
     this.x = x
@@ -80,7 +92,7 @@ function Player(x,y,width,height){
             ctx.shadowBlur = 20;
             ctx.lineJoin = "bevel"
             ctx.lineWidth = 10     
-        }    
+    }    
 }
 //adding key events for keyup and keydown. These are linked to set and unset functions
 
@@ -141,13 +153,13 @@ function Wall(x,y,width,height,speed) {
     //fashion, dependent on its position
     this.update = function () {
         //If the wall is at x=0 or at x=canvas.width, the speed property will negate
-        //and affect the x-coordinate @ line 135, 138, and 141. At 148 and 141, there
-        // is a change in direction as well as a change in speed bc of the * 
+        //and affect the x-coordinate. there
+        // is a change in direction as well as a change in speed  
+        this.render()  
+        this.x -= this.speed   
         if (this.x < 0 || this.x + this.width > canvas.width){
            this.speed = -this.speed
         }
-        this.x -= this.speed   
-           this.render()  
         if (counter <= 45){
         this.x = this.x - (this.speed * 1.2)
         }  
@@ -236,6 +248,10 @@ function animate() {
         typewriter.style.visibility = "visible"
         typewriter.style.float = "left"
         typewriter.innerText = `You died.`
+        button.style.visibility = "visible"
+        button.addEventListener('click', () => {
+            window.location.reload()
+        })
     }
     //Similar to above, except run this code when player is alive, and counter = -1
     //If I try counter = 0, prettyGoodAudio starts at 1 second, so I did -1
@@ -275,40 +291,31 @@ const playLevel1 = (e) => {
     //If the G key is pressed, 'press G to start' will disappear, animate function runs,
     //and the keydown to run the game is disabled
     if (e.keyCode === 71){  
+        document.removeEventListener('keydown', playLevel1)
         typewriter.style.visibility = "hidden"
         animate()
-        document.removeEventListener('keydown', playLevel1)
-       }
-    //The gameTimer function will control the counter for the game 
-    const GameTimer = () => {
-    //setInterval(() => {    
-        console.log(counter)
-        timerBox.innerText = counter
-        //This will clear the timer based on the condition of time and player.alive
-        //status
-        if (!player.alive || player.alive && counter === 0){
-            timerBox.innerText = "time left" + counter   
-            clearInterval(Timer)
-        }
-       //  else if (player.alive && counter === 0){
-       //      timerBox.innerText = counter
-       //      clearInterval(Timer)
-       //  }
-         counter--
-      // }, 1000);
-             }
         const Timer = setInterval(GameTimer, 1000)
+    }
 }
+let counter = 59
+const GameTimer = () => {
+    timerBox.innerText = "Time Left: " + counter  
+    //This will clear the timer based on the condition of time and player.alive
+    //status
+    if (!player.alive || player.alive && counter === 0){
+        clearInterval(Timer)
+    }
+    counter--
+}
+//The gameTimer function will control the counter for the game 
 //This event listener will run the playLevel1 function when the playAgain button is clicked
 //As a try again or to just play again
 document.addEventListener('keydown', playLevel1)
-
-nextLevelButton.addEventListener('click', () => {
-window.location.reload()
-})
 //document.addEventListener('keydown', playerMovement)
 //This is to run the prompt for the user to press G to start when the browser loads
 document.addEventListener('DOMContentLoaded', () => {
-typewriter.innerText = `Press G to start`
+    typewriter.innerText = `Press G to start`
+    button.style.visibility = "hidden"
+    
 })
 

@@ -4,6 +4,8 @@
     --font-family: 'Press Start 2P', monospace;
     --font-size: 16px;
     --color: white;
+    --timerHeight:35px;
+    --buttonWidth:250px;
 }
 body {
     font-family: var(--font-family);
@@ -12,56 +14,83 @@ body {
     rgb(2, 22, 57) 0%,
     rgb(93, 11, 7) 100%
     );
+    background-repeat: no-repeat;
     color: var(--color);
+    height:100vh;
     margin:20px;
 }
 .game-instructions-timer-button {
-    background-color:black;
+    background-color:rgb(17, 15, 15);
     border:var(--border);
     border-radius: var(--border-radius);
-    font-size: var(--font-size);
 }
 #grid-container{
     display:grid;
-    grid-template-columns: repeat(3,minmax(fit-content, 1fr));
+    grid-template-columns: repeat(3,minmax(250px, 400px));
+    grid-gap:20px;
     justify-items:center;
     align-items:center;
+    margin:50px;
+    max-width:1400px;
 }
 main {
-    grid-column:2;
+    position:relative;
+    grid-column:1 / span 2;
     grid-row:2/span 3;
+    /* width:fit-content; */
+    margin:40px;
 }
-#instructions {
-    grid-column:1;
-    grid-row:3/span 2;
-    align-self:end;
-    height:600px;
-    width:300px;
-    line-height:40px;
+#game {
+    width: 100%;
+    /* height: fit-content; */
+
+}
+#game-title {
+    grid-column: 1/span 2;
+    justify-self:center;
+    font-size: calc((var(--font-size) * 2))
 }
 #timer {
-    grid-column:1;
-    grid-row:2;
-    align-self:start;
-    height:50px;
-    width:300px;
+    grid-column:3;
+    grid-row:1;
+    justify-self:center;
+    height:var(--timerHeight);
+    width:var(--buttonWidth);
+    font-size:var(--font-size);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+#instructions {
+    grid-column:3;
+    grid-row:2/span 3;
+    align-self:stretch;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-around;
+    width:var(--buttonWidth);
+    line-height:30px
+}
+h3 {
+    margin: 0 10px;
+    text-align:center;
+    font-size:calc(var(--font-size)* .85)
 }
 #button {
     grid-column:2;
     grid-row:6;
-    height:75px;
-    width:200px;
+    position: absolute;
+    top:45%;
+    left:40%;
+    height:calc(var(--timerHeight) * 2);
+    width:var(--buttonWidth);
     color:var(--color);
     font-family: var(--font-family)
 }
-#game-title {
-    grid-column: 2/ span 1;
-    font-size: 40px;
-}
 #typewriter {
-    grid-column:2;
+    grid-column:1/ span 2;
     grid-row:5;
-    margin:40px;
+    align-self:start;
     max-width: min-content;
     overflow: hidden;
     border-right: .15em solid orange;
@@ -69,7 +98,7 @@ main {
     font-size: 1.2rem;
     animation: 
         typing 8s steps(80, end) forwards,
-        blink 8s infinite;    
+        blink 1s infinite;    
     }
 @keyframes typing {
     from { width: 0 }
@@ -79,4 +108,4 @@ main {
     from { border-color: transparent }
     to { border-color: orange; }
   }
-    
+ 
