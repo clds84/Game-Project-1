@@ -310,7 +310,6 @@ const playLevel1 = (e) => {
     }
 }
 let counter = 59
-
 const GameTimer = () => {
     timerBox.innerText = "Time Left: " + counter  
     //This will clear the timer based on the condition of time and player.alive
