@@ -34,9 +34,9 @@ body {
     max-width:1400px;
 }
 main {
-    position:relative;
     grid-column:1 / span 2;
     grid-row:2/span 3;
+    
     /* width:fit-content; */
     margin:40px;
 }
@@ -67,9 +67,9 @@ main {
     align-self:stretch;
     display:flex;
     flex-direction:column;
-    justify-content:space-around;
+    justify-content:space-evenly;
     width:var(--buttonWidth);
-    line-height:30px
+    line-height:40px;
 }
 h3 {
     margin: 0 10px;
@@ -77,11 +77,8 @@ h3 {
     font-size:calc(var(--font-size)* .85)
 }
 #button {
-    grid-column:2;
+    grid-column:1 / span 2;
     grid-row:6;
-    position: absolute;
-    top:45%;
-    left:40%;
     height:calc(var(--timerHeight) * 2);
     width:var(--buttonWidth);
     color:var(--color);
@@ -92,12 +89,15 @@ h3 {
     grid-row:5;
     align-self:start;
     max-width: min-content;
+}
+#typewriterDiv {
+
     overflow: hidden;
     border-right: .15em solid orange;
     white-space: nowrap;
     font-size: 1.2rem;
     animation: 
-        typing 8s steps(80, end) forwards,
+        typing 2s steps(50, end) forwards,
         blink 1s infinite;    
     }
 @keyframes typing {

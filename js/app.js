@@ -13,8 +13,16 @@ const ctx = canvas.getContext('2d');
 
 let timerBox = document.querySelector('#timer')
 let instructionBox = document.querySelector('instructions')
+
+let typewriterStart = document.createElement('div')
+typewriterStart.id = "typewriterDiv"
+
+
 let typewriter = document.querySelector('#typewriter')
 let button = document.getElementById('button')
+let typewriter2 = document.createElement('div')
+
+typewriter.appendChild(typewriterStart)
 
 const prettyGoodAudio = new Audio('pretty-good.m4a');
 const xmasTimeAudio = new Audio('xmas-time.m4a')
@@ -245,10 +253,13 @@ function animate() {
         window.cancelAnimationFrame(animation)
         moodyManAudio.pause()
         xmasTimeAudio.play()
-        typewriter.style.visibility = "visible"
-        typewriter.style.float = "left"
-        typewriter.innerText = `You died.`
-        button.style.visibility = "visible"
+        typewriter.removeChild(typewriterStart)
+        typewriter.appendChild(typewriterStart)
+        typewriterStart.style.visibility = "visible"
+        typewriterStart.innerText = `You died. Play again?`
+            setTimeout(() => {
+                button.style.visibility = "visible"
+            }, 2100);
         button.addEventListener('click', () => {
             window.location.reload()
         })
@@ -259,9 +270,16 @@ function animate() {
         window.cancelAnimationFrame(animation)
         moodyManAudio.pause()
         prettyGoodAudio.play()
-        typewriter.style.visibility = "visible"
-        typewriter.style.marginLeft = "380px"
-        typewriter.innerText = `Woah woah woah`
+        typewriter.removeChild(typewriterStart)
+        typewriter.appendChild(typewriterStart)
+        typewriterStart.style.visibility = "visible"
+        typewriterStart.innerText = `Woah woah woah. Sick! Play again?`
+        setTimeout(() => {
+            button.style.visibility = "visible"
+        }, 2100);
+    button.addEventListener('click', () => {
+        window.location.reload()
+    })
     }
     //render the teleport squares here and use update for the walls. The walls' update
     //function include render inside it.
@@ -292,7 +310,7 @@ const playLevel1 = (e) => {
     //and the keydown to run the game is disabled
     if (e.keyCode === 71){  
         document.removeEventListener('keydown', playLevel1)
-        typewriter.style.visibility = "hidden"
+        typewriterStart.style.visibility = "hidden"
         animate()
         const Timer = setInterval(GameTimer, 1000)
     }
@@ -314,7 +332,7 @@ document.addEventListener('keydown', playLevel1)
 //document.addEventListener('keydown', playerMovement)
 //This is to run the prompt for the user to press G to start when the browser loads
 document.addEventListener('DOMContentLoaded', () => {
-    typewriter.innerText = `Press G to start`
+    typewriterStart.innerText = `Press G to start`
     button.style.visibility = "hidden"
     
 })
